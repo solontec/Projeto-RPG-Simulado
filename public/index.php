@@ -2,9 +2,9 @@
 use Classes\User;
 use Classes\Connection;
 use Classes\UserDAO;
-require_once "../classes/Connection.php";
-require_once "../classes/UserDAO.php";
-require_once "../classes/User.php";
+require_once "../class/Connection.php";
+require_once "../class/UserDAO.php";
+require_once "../class/User.php";
 
 $name = $_POST['name'];
 $email = $_POST['email'];
