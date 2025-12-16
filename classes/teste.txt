@@ -1,0 +1,80 @@
+<?php
+
+namespace Usuario\Classes;
+use Usuario\Classes\Connection;
+require_once "Connection.php";
+
+class Usuario{
+    private string $email;
+    private $senha;
+    private $conn  = null;
+
+    public function __construct($email, $senha){
+        $db = new Connection();
+        $this->conn = $db->getConnection();
+
+        $this->email = $email;
+        $this->senha = $senha;
+
+    }
+
+
+    public function tratarHash(){
+        $this->senha = password_hash($this->senha, PASSWORD_DEFAULT);
+    }
+
+    public function inserir(){
+       $sql = "INSERT INTO usuarios(email, senha) VALUES (?, ?)"; // placeholders
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("ss", $this->email, $this->senha);
+
+        if($stmt->execute()){
+            header("Location: ../public/PaginaLogin.php");
+            exit(); // evita execução indevbida do codigo
+        } else{
+            $this->conn->connect_error;
+        }
+    }
+
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function getSenha(){
+        return $this->senha;
+    }
+
+    public function setEmail($e){
+        $this->email = $e;
+
+    }
+
+    public function setSenha($s){
+        $this->senha = $s;
+    }
+}
+
+
+
+
+<?php
+
+use Usuario\Classes\Connection;
+use Usuario\Classes\Usuario;
+
+require_once "../Classes/Usuario.php";
+require_once "../Classes/Connection.php";
+
+if($_SERVER['REQUEST_METHOD'] === "POST"){
+    $email = $_POST["email"];
+    $senha = $_POST["senha"];
+
+
+    $usuario = new Usuario($email, $senha);
+    $usuario->tratarHash();
+    $usuario->inserir();
+
+
+
+
+}
