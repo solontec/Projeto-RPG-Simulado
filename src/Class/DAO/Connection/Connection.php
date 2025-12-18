@@ -1,12 +1,9 @@
 <?php
 
-namespace classes;
-
 class Connection{
     private string $hostname = 'localhost';
     private string $username = 'root';
     private string $password = '12345';
-
     private string $database = 'RPG';
 
     private $conn;
