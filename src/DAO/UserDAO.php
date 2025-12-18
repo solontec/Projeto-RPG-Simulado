@@ -1,15 +1,24 @@
 <?php
 
 
-class UserDAO implements User {
+namespace src\DAO;
+
+use src\DAO\Connection\Connection;
+use UserInterface;
+
+class UserInterfaceDAO implements UserInterface
+{
     private $conn;
-    public function __construct(){
+
+    public function __construct()
+    {
         $db = new Connection();
         $this->conn = $db->getConnection();
     }
 
 
-    public function SignUp(User|\Interface\User $user): void{
+    public function SignUp(UserInterface|\Interface\User $user): void
+    {
         $sql = "INSERT INTO usuarios(name, email, password) VALUES(?, ? ,?)";
         $stmt = $this->conn->prepare($sql);
 
@@ -23,9 +32,9 @@ class UserDAO implements User {
             $password
         );
 
-        if($stmt->execute()){
+        if ($stmt->execute()) {
             echo "deu bom";
-        } else{
+        } else {
             $this->conn->rollback(); // dá um passo pora trás pra n perder algo e acontecer uma merda colossal
         }
 
@@ -33,7 +42,7 @@ class UserDAO implements User {
         $this->conn->close();
     }
 
-    public function SignIn(User|\Interface\User $user): bool
+    public function SignIn(UserInterface|\Interface\User $user): bool
     {
         $sql = "SELECT email, password FROM usuarios WHERE email = ?";
         $stmt = $this->conn->prepare($sql);
