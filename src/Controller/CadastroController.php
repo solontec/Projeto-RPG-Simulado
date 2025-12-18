@@ -1,9 +1,6 @@
 <?php
 
 require_once __DIR__ . '/../../src/bootstrap.php';
-
-
-
 class CadastroController{
     public function handle() // handle lida com requisicao
     {

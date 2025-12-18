@@ -1,6 +1,5 @@
 <?php
 
-
 class LoginController{
     public function handle() // handle lida com requisicao
     {
@@ -20,7 +19,6 @@ class LoginController{
         if ($dao->SignIn($user)) {
             header("Location: public.php");
         }
-
 
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-class UserDAO implements Usuario {
+class UserDAO implements User {
     private $conn;
     public function __construct(){
         $db = new Connection();

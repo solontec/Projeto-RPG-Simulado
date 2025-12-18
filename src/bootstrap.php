@@ -1,7 +1,7 @@
 <?php
 
 // Interfaces
-require_once __DIR__ . '/Interface/Usuario.php';
+require_once __DIR__ . '/Interface/User.php';
 
 // Classes base
 require_once __DIR__ . '/Class/User.php';
