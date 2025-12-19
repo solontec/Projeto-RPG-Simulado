@@ -5,7 +5,7 @@ namespace src\DAO;
 use MissionInterface;
 use src\DAO\Connection\Connection;
 
-class MissionInterfaceDAO implements MissionInterface
+class MissionDAO
 {
     private $conn;
 
@@ -15,9 +15,8 @@ class MissionInterfaceDAO implements MissionInterface
         $this->conn = $db->getConnection();
     }
 
-    public function createMission(MissionInterface $mission): void
-    {
-        $sql = "INSERT INTO mission(nameMission, descriptionMission, dateMission, dificulteMission) VALUES(?,?,?,?)";
+    public function createMission(Mission $mission): void{
+        $sql = "INSERT INTO missions(nameMission, descriptionMission, dateMission, dificulteMission) VALUES(?,?,?,?)";
         $stmt = $this->conn->prepare($sql);
 
         $nameMission = $mission->getNameMission();
@@ -31,5 +30,9 @@ class MissionInterfaceDAO implements MissionInterface
         if ($stmt->execute()) {
             echo "Missão criada com sucesso!";
         }
+    }
+
+    public function readMission(Mission $mission): bool{
+
     }
 }
