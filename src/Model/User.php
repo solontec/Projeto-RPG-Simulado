@@ -1,6 +1,6 @@
 <?php
 
-
+namespace App\User;
 class User{
     public string $name;
     public string $email;
@@ -9,10 +9,10 @@ class User{
 
     // here i define atributtes for this class
 
-    public function __construct(string $name, string $email, string $password){
-        $this->name = $name;
+    public function __construct(?string $name, string $email, string $password){
+        $this->name = $name ?? '';
         $this->email = $email;
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        $this->password = $password;
 
     } // init class with construct
 
@@ -20,6 +20,7 @@ class User{
     public function getName(){
         return $this->name;
     }
+
     public function getEmail(){
         return $this->email; //get Email
     }

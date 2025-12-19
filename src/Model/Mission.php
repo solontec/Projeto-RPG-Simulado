@@ -1,7 +1,7 @@
 <?php
 
 
-
+namespace src\DAO;
 class Mission{
     public $nameMission;
     public $descriptionMission;

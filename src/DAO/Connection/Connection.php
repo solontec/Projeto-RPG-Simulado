@@ -1,6 +1,8 @@
 <?php
 
-class Connection{
+namespace src\DAO\Connection;
+class Connection
+{
     private string $hostname = 'localhost';
     private string $username = 'root';
     private string $password = '12345';
@@ -8,18 +10,19 @@ class Connection{
 
     private $conn;
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->conn = new \mysqli($this->hostname, $this->username, $this->password, $this->database);
 
-        if($this->conn->connect_error){
+        if ($this->conn->connect_error) {
             die("Connection Failed:" . $this->conn->connect_error);
-        } else{
-            echo "connected";
         }
+
 
     }
 
-    public function getConnection(){
+    public function getConnection()
+    {
         return $this->conn;
 
     }

@@ -1,11 +1,11 @@
 <?php
 
-
+namespace App\UserInterface;
 /**
- * @implements User // doc
+ * @implements UserInterface // doc
  */
-interface User{
+interface UserInterface{
     public function SignUp(User $user): void; // usage
-    public function SignIn(User $user);
+    public function SignIn(UserInterface $user);
 
 }
