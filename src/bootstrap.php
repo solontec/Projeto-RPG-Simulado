@@ -21,5 +21,6 @@ require_once __DIR__ . '/Controller/MissionController.php';
 
 // Services
 require_once __DIR__ . '/Service/MissionService.php';
+require_once __DIR__ . '/Service/UserService.php';
 
 

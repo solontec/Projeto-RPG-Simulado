@@ -1,30 +1,43 @@
 <?php
 
-
 namespace App\Controller;
-use App\User\User;
-use App\DAO\UserDAO;
-
+use App\Service\UserService;
 
 class CadastroController{
-    public function handle() // handle lida com requisicao
+    public function handle(): void // handle lida com requisicao
     {
         if ($_SERVER['REQUEST_METHOD'] !== "POST") {
+            http_response_code(405);
+            echo json_encode(['error' => 'Method not allowed']);
             return;
         }
-        $hashPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        // capturo o json bruto direto do que me enviar
+        $jsonRaw = file_get_contents('php://input');
 
-        $user = new User(
-            $_POST['name'],
-            $_POST['email'],
-            $hashPassword
-        );
-
-        $dao = new UserDAO();
-
-        if ($dao->SignUp($user)) {
-            echo "Cadastrado com sucesso!";
+        // decodifico esse json eviado para um ARRAY!!!
+        $data = json_decode($jsonRaw, true);
+        if(!$data || !isset($data['name'],  $data['email'], $data['password'])){
+            http_response_code(400);
+            echo json_encode(['error' => 'Invalid']);
+            return;
         }
+
+       $service = new UserService();
+        $result = $service->registerUser($data);
+
+        if($result['success']){
+            http_response_code(201);
+            echo json_encode([
+                'status' => 'created'
+            ]);
+        } else{
+            http_response_code(400);
+            echo json_encode([
+                'error' => $result['error']
+            ]);
+        }
+
+        echo json_encode($result);
 
 
     }

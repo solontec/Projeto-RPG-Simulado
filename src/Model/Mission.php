@@ -1,14 +1,14 @@
 <?php
 
 
-namespace src\DAO;
+namespace src\Model;
 class Mission{
     public $nameMission;
     public $descriptionMission;
     public $dateMission;
     public $dificulteMission;
 
-    public function __construct(string $nameMission, string $descriptionMission, string $dateMission, string $dificulteMission){
+    public function __construct( $nameMission, string $descriptionMission, $dateMission, $dificulteMission){
         $this->nameMission = $nameMission;
         $this-> descriptionMission = $descriptionMission;
         $this->dateMission = $dateMission;

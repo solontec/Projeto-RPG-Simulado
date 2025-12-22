@@ -17,7 +17,7 @@ class UserDAO
     }
 
 
-    public function SignUp(User $user): void
+    public function SignUP(User $user): bool
     {
         $sql = "INSERT INTO usuarios(name, email, password) VALUES(?, ? ,?)";
         $stmt = $this->conn->prepare($sql);
@@ -33,7 +33,7 @@ class UserDAO
         );
 
         if ($stmt->execute()) {
-            echo "Usuario Cadastrado com Sucesso!";
+            return true;
         } else {
             $this->conn->rollback(); // dá um passo pora trás pra n perder algo e acontecer uma merda colossal
         }
@@ -68,6 +68,18 @@ class UserDAO
         }
 
     return false;
+
+    }
+
+    public function emailExists(string $email): bool{
+        $sql = "SELECT id FROM usuarios WHERE email = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+
+        return $stmt->get_result()->num_rows > 0;
+        // já retorna num rows > 0, se n retornar cai na regra do Service
+
 
     }
 }

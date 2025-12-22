@@ -3,38 +3,46 @@
 //
 namespace App\Service;
 
-use http\Exception\InvalidArgumentException;
+
 use src\DAO\MissionDAO;
-use src\DAO\Mission;
+use src\Model\Mission;
 class MissionService{
     private $missionDAO;
 
     public function __construct(){
-       $this->dao = new MissionDAO();
+       $this->missionDAO = new MissionDAO();
     }
+    public function createMission(array $data)
+    {
+        $name = trim((string) ($data['nameMission'] ?? ''));
+        $description = trim((string) ($data['descriptionMission'] ?? ''));
+        $date = trim((string) ($data['dateMission'] ?? ''));
+        $difficulty = trim((string) ($data['dificulteMission'] ?? ''));
 
-    public function createMission(Mission $mission): bool{
+        if (empty($name) || empty($description) || $date === '' || empty($difficulty)) {
+            return [
+                'success' => false,
+                'error' => 'preencha todos os campos'
+            ];
+        }
+        $mission = new Mission(
+            $name,
+            $description,
+            $date,
+            $difficulty
+        );
 
-        if(empty($mission->getNameMission()) || empty($mission->getDescriptionMission()) || empty($mission->getDateMission()) || empty($mission->getDificulteMission())){
-            throw new InvalidArgumentException('This is necessary to insert all fields');
+        if ($this->missionDAO->createMission($mission)) {
+            return [
+                'success' => true,
+                'mission' => 'Mission created'
+            ];
         }
 
-        // expression used for represent exception.
-
-        if($mission->getDateMission() < date("Y-m-d")){
-            throw new InvalidArgumentException('This is necessary to insert the date of manner correct');
-        }
-
-        return $this->dao->createMission($mission);
-
-    }
-
-    public function updateMission(Mission $mission): bool{
-        return 0;
-    }
-
-    public function deleteMission(Mission $mission): bool{
-        return 0;
+        return [
+            'success'=> false,
+            'message' => 'Mission exists'
+        ];
     }
 
 

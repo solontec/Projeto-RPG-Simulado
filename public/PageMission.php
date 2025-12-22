@@ -25,7 +25,6 @@
 
         </select>
 
-
         <button type="submit">Criar missão!</button>
     </form>
 </div>

@@ -4,6 +4,7 @@ namespace src\DAO;
 
 use MissionInterface;
 use src\DAO\Connection\Connection;
+use src\Model\Mission;
 
 class MissionDAO
 {
@@ -32,7 +33,4 @@ class MissionDAO
         }
     }
 
-    public function readMission(Mission $mission): bool{
-
-    }
 }
